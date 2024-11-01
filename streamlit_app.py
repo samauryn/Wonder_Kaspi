@@ -311,11 +311,11 @@ fig5 = go.Figure()
 delivery_counts = df_original['Delivery_type'].value_counts()
 
 # Пастельные цвета для каждого типа доставки
-pastel_colors = ['rgba(255, 179, 186, 0.7)',  # Пастельный розовый
+pastel_colors = ['rgba(255, 179, 186, 0.95)',  # Пастельный розовый
                 #  'rgba(255, 223, 186, 0.7)',  # Пастельный оранжевый
                 #  'rgba(255, 255, 186, 0.7)',  # Пастельный желтый
-                 'rgba(186, 255, 201, 0.7)',  # Пастельный зеленый
-                 'rgba(186, 225, 255, 0.7)']  # Пастельный голубой
+                 'rgba(186, 255, 201, 0.95)',  # Пастельный зеленый
+                 'rgba(186, 225, 255, 0.95)']  # Пастельный голубой
 
 # Создаем круговую диаграмму
 fig5 = go.Figure(data=[go.Pie(
@@ -402,12 +402,15 @@ df_original['StatusGroup'] = df_original['status'].apply(
 # Получаем уникальные значения 'Delivery_type'
 delivery_types = df_original['Delivery_type'].unique()
 
-# Создаем пустой subplot для всех графиков
-fig4 = go.Figure()
-fig4 = sp.make_subplots(rows=1, cols=len(delivery_types), subplot_titles=delivery_types, specs=[[{'type': 'domain'}]*len(delivery_types)])
+# Цвета для каждого статуса с пастельной схемой
+pastel_colors = {
+    "Cancelled": 'rgba(255, 179, 186, 0.95)',  # Пастельный розовый
+    "Completed": 'rgba(186, 255, 201, 0.95)',  # Пастельный зеленый
+    "Returned": 'rgba(186, 225, 255, 0.95)'    # Пастельный голубой
+}
 
-# Цвета для каждого статуса
-colors = {"Cancelled": "#ff6b6b", "Completed": "#4caf50", "Returned": "#2196f3"}
+# Создаем пустой subplot для всех графиков
+fig4 = sp.make_subplots(rows=1, cols=len(delivery_types), subplot_titles=delivery_types, specs=[[{'type': 'domain'}]*len(delivery_types)])
 
 # Генерируем отдельный график для каждого типа доставки
 for i, delivery_type in enumerate(delivery_types):
@@ -422,8 +425,9 @@ for i, delivery_type in enumerate(delivery_types):
         labels=status_counts.index,
         values=status_counts.values,
         name=delivery_type,
-        marker=dict(colors=[colors[label] for label in status_counts.index]),
-        textinfo='label+percent'
+        marker=dict(colors=[pastel_colors[label] for label in status_counts.index]),  # Применяем пастельные цвета
+        textinfo='label+percent+value',  # Показываем метки, проценты и количество
+        textposition='inside'
     ), row=1, col=i+1)
 
 # Настройка графика
