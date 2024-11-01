@@ -354,8 +354,8 @@ delivery_types = df_original['Delivery_type'].unique()
 
 # Цвета для каждого статуса с пастельной схемой
 pastel_colors = {
-    "Cancelled": 'rgba(255, 179, 186)',  # Пастельный розовый
-    "Completed": 'rgba(186, 255, 201)',  # Пастельный зеленый
+    "Cancelled": 'rgba(186, 255, 201)',  # Пастельный розовый
+    "Completed": 'rgba(255, 179, 186)',  # Пастельный зеленый
     "Returned": 'rgba(186, 225, 255)'    # Пастельный голубой
 }
 
